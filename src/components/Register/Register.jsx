@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import MyContainer from "../../MyContainer/MyContainer";
 
 const Register = () => {
-    const { googleSignIn , setLoading} = use(AuthContext)
+    const { googleSignIn, setLoading, setUser } = use(AuthContext)
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -28,6 +28,7 @@ const Register = () => {
     const handleGoogleSignIn=()=>{
         googleSignIn()
         .then(result=>{
+            setUser(result.user)
             console.log(result.user)
 
             const newUser = {
