@@ -14,6 +14,7 @@ const router = createBrowserRouter([
     {
         path: "/",
         Component: RootLayout,
+        hydrateFallbackElement: <p className="text-4xl text-gray-500 text-center mt-10">Loading.....</p>,
         children: [
             {
                 index: true,
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/allProducts',
+                loader: () => fetch('http://localhost:3000/products'),
                 Component: AllProducts
             },
             {

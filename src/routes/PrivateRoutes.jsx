@@ -4,10 +4,14 @@ import { Navigate } from "react-router";
 
 
 const PrivateRoutes = ({children}) => {
-    const {user} = use(AuthContext)
+    const {user,loading} = use(AuthContext)
+
+    if(loading){
+        return <p className="text-4xl text-gray-500 text-center mt-10">Loading.....</p>
+    }
 
     if(!user){
-        return <Navigate to={'/login'}></Navigate>
+        return <Navigate to={'/register'}></Navigate>
     }
 
     return children
