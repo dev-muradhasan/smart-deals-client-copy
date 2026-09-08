@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const MyBids = () => {
     const { user } = use(AuthContext);
     const [bids, setBids] = useState([])
-    console.log(user)
+    console.log(user.accessToken)
 
     useEffect(() => {
         if (user?.email) {
@@ -108,11 +108,11 @@ const MyBids = () => {
 
                                             <div>
                                                 <p className="font-bold text-[#001931]">
-                                                    {bid.productTitle}
+                                                    {bid.productTitle ??' '}
                                                 </p>
 
                                                 <p className="text-xs font-medium text-[#A1A1AA]">
-                                                    ${bid.productPrice}
+                                                    ${bid.productPrice ??' '}
                                                 </p>
                                             </div>
                                         </div>
