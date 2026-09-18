@@ -9,6 +9,7 @@ import {
 import { use, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const ProductDetails = () => {
     const [bids, setBids] = useState([]);
@@ -17,16 +18,23 @@ const ProductDetails = () => {
     const bidModalRef = useRef(null);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/products/bids/${product._id}`, {
-            headers:{
-                authorization: `Bearer ${user.accessToken}`
-            }
+        axios(`http://localhost:3000/products/bids/${product._id}`)
+        .then(data=>{
+            console.log('after axios get', data.data);
+            setBids(data.data)
         })
-            .then(res => res.json())
-            .then(data => {
-                setBids(data)
-            })
-    }, [product._id, user])
+    }, [product._id])
+    // useEffect(() => {
+    //     fetch(`http://localhost:3000/products/bids/${product._id}`, {
+    //         headers:{
+    //             authorization: `Bearer ${user.accessToken}`
+    //         }
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setBids(data)
+    //         })
+    // }, [product._id, user])
 
     const handleBidModalOpen = () => {
         bidModalRef.current.showModal();

@@ -15,5 +15,5 @@ export const links = <>
     } to={'/myBids'}>My Bids</NavLink></li>
     <li><NavLink className={({ isActive }) =>
         `font-medium ${isActive ? "text-primary" : "text-gray-700"}`
-    } to={'/createProducts'}>Create Products</NavLink></li>
+    } to={'/createAProduct'}>Create Products</NavLink></li>
 </>

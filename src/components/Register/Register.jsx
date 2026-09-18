@@ -47,7 +47,7 @@ const Register = () => {
             })
             .then(res=>res.json())
             .then(data=>{
-                console.log('data after user save',data)
+                // console.log('data after user save',data)
             })
 
             setLoading(false)

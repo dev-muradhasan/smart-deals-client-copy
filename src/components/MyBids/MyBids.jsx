@@ -3,26 +3,34 @@ import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
 import MyContainer from "../../MyContainer/MyContainer";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const MyBids = () => {
     const { user } = use(AuthContext);
     const [bids, setBids] = useState([])
-    // console.log(user.accessToken)
+    const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
-        if (user?.email) {
-            fetch(`http://localhost:3000/bids?email=${user.email}`,{
-                headers : {
-                    authorization: `Bearer ${user.accessToken}`
-                }
+        axiosSecure.get(`/bids?email=${user.email}`)
+            .then(data => {
+                setBids(data.data)
             })
-                .then(res => res.json())
-                .then(data => {
-                    setBids(data)
-                })
-        }
-    }, [user?.email, user.accessToken])
+    }, [user, axiosSecure])
+
+    // useEffect(() => {
+    //     if (user?.email) {
+    //         fetch(`http://localhost:3000/bids?email=${user.email}`,{
+    //             headers : {
+    //                 authorization: `Bearer ${user.accessToken}`
+    //             }
+    //         })
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 setBids(data)
+    //             })
+    //     }
+    // }, [user?.email, user.accessToken])
 
     const handleDeleteBid = (_id) => {
         Swal.fire({
@@ -34,23 +42,23 @@ const MyBids = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
-            if (result.isConfirmed){
-                fetch(`http://localhost:3000/bids/${_id}`,{
+            if (result.isConfirmed) {
+                fetch(`http://localhost:3000/bids/${_id}`, {
                     method: 'DELETE'
                 })
-                .then(res=>res.json())
-                .then(data=>{
-                    // console.log('after delete', data)
-                    if (data.deletedCount){
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
-                            icon: "success"
-                        });
-                        const remainingBids = bids.filter(bid=> bid._id !== _id);
-                        setBids(remainingBids)
-                    }
-                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log('after delete', data)
+                        if (data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            const remainingBids = bids.filter(bid => bid._id !== _id);
+                            setBids(remainingBids)
+                        }
+                    })
             }
         });
     }
@@ -74,8 +82,8 @@ const MyBids = () => {
                         <thead>
                             <tr className="text-sm font-bold text-[#001931]">
                                 <th>SL No</th>
-                                <th>Product</th>
-                                <th>Seller</th>
+                                {/* <th>Product</th> */}
+                                <th>Buyer</th>
                                 <th>Bid Price</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -95,9 +103,9 @@ const MyBids = () => {
                                     </th>
 
                                     {/* Product */}
-                                    <td>
+                                    {/* <td>
                                         <div className="flex items-center gap-3">
-                                            {/* Product Image */}
+                                           
                                             <div className="h-10 w-10 shrink-0 overflow-hidden rounded">
                                                 <img
                                                     src={bid.productImage}
@@ -116,16 +124,16 @@ const MyBids = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                    </td>
+                                    </td> */}
 
                                     {/* Seller */}
                                     <td>
                                         <div className="flex items-center gap-3">
-                                            {/* Seller Image */}
-                                            <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full">
+                                            {/* buyer Image */}
+                                            <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full">
                                                 <img
-                                                    src={bid.sellerImage}
-                                                    alt={bid.sellerName}
+                                                    src={bid.buyer_image}
+                                                    alt={bid.buyer_name}
                                                     className="h-full w-full object-cover"
                                                 />
                                             </div>
