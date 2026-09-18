@@ -37,7 +37,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    {user ? <Link onClick={handleSignOut} to={'/login'} className="btn btn-primary">Logout</Link> : <div className="flex gap-3"><Link to={'/login'} className="btn btn-outline text-primary bg-white border-primary">Login</Link>
+                    {user ? <Link onClick={handleSignOut} to={'/login'} className="btn btn-primary btn-gradient">Logout</Link> : <div className="flex gap-3"><Link to={'/login'} className="btn btn-outline text-primary bg-white border-primary">Login</Link>
                         <Link to={'/register'} className="btn btn-gradient text-white">Register</Link></div>}
 
                 </div>
