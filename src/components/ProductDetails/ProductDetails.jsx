@@ -18,9 +18,9 @@ const ProductDetails = () => {
     const bidModalRef = useRef(null);
 
     useEffect(() => {
-        axios(`http://localhost:3000/products/bids/${product._id}`)
+        axios(`https://smart-deals-server-copy.vercel.app/products/bids/${product._id}`)
         .then(data=>{
-            console.log('after axios get', data.data);
+            // console.log('after axios get', data.data);
             setBids(data.data)
         })
     }, [product._id])
@@ -62,7 +62,7 @@ const ProductDetails = () => {
             status
         }
         
-        fetch('http://localhost:3000/bids', {
+        fetch('https://smart-deals-server-copy.vercel.app/bids', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -109,7 +109,7 @@ const ProductDetails = () => {
                         {/* Product Image */}
                         <div className="h-75 overflow-hidden rounded-lg bg-base-300 md:h-100">
                             <img
-                                src={product.image}
+                                src={product.image || null}
                                 alt={product.title}
                                 className="h-full w-full object-cover"
                             />
@@ -198,7 +198,7 @@ const ProductDetails = () => {
                             {/* Seller */}
                             <div className="flex items-center gap-3">
                                 <img
-                                    src={product.seller_image}
+                                    src={product.seller_image || null}
                                     alt={product.seller_name}
                                     className="h-12 w-12 rounded-full object-cover"
                                 />
@@ -380,7 +380,7 @@ const ProductDetails = () => {
                                         <div className="avatar">
                                             <div className="h-10 w-10 rounded-full">
                                                 <img
-                                                    src={bid.buyer_image}
+                                                    src={bid.buyer_image || null}
                                                     alt={bid.buyer_name}
                                                 />
                                             </div>

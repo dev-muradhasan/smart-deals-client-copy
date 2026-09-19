@@ -5,6 +5,7 @@ import MyContainer from "../../MyContainer/MyContainer";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 const MyBids = () => {
     const { user } = use(AuthContext);
@@ -12,11 +13,17 @@ const MyBids = () => {
     const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
-        axiosSecure.get(`/bids?email=${user.email}`)
-            .then(data => {
-                setBids(data.data)
+        if (!user?.email) return;
+
+        axiosSecure
+            .get(`/bids?email=${encodeURIComponent(user.email)}`)
+            .then((res) => {
+                setBids(res.data);
             })
-    }, [user, axiosSecure])
+            .catch((error) => {
+                console.log("Bids error:", error.response?.data);
+            });
+    }, [user?.email, axiosSecure]);
 
     // useEffect(() => {
     //     if (user?.email) {
@@ -43,7 +50,8 @@ const MyBids = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:3000/bids/${_id}`, {
+
+                fetch(`${API_URL}/bids/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

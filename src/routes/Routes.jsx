@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../components/Home/Home";
 import AllProducts from "../components/AllProducts/AllProducts";
@@ -10,6 +10,8 @@ import MyBids from "../components/MyBids/MyBids";
 import CreateProducts from "../components/CreateProducts/CreateProducts";
 import ProductDetails from "../components/ProductDetails/ProductDetails";
 import CreateAProduct from "../components/CreateAProduct/CreateAProduct";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const router = createBrowserRouter([
     {
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/allProducts',
-                loader: () => fetch('http://localhost:3000/products'),
+                loader: () => fetch(`${API_URL}/products`), 
                 Component: AllProducts
             },
             {
@@ -48,12 +50,17 @@ const router = createBrowserRouter([
             },
             {
                 path: '/products/:id',
-                loader: ({ params }) => fetch(`http://localhost:3000/products/${params.id}`),
+                loader: ({ params }) =>
+                    fetch(`${API_URL}/products/${params.id}`),
                 element: <PrivateRoutes><ProductDetails></ProductDetails></PrivateRoutes>
             },
             {
                 path: '/createAProduct',
                 element: <PrivateRoutes><CreateAProduct></CreateAProduct></PrivateRoutes>
+            },
+            {
+                path: "*",
+                element: <Navigate to="/" replace />
             }
         ]
     },

@@ -17,19 +17,19 @@ const Register = () => {
         const image = form.image.value;
         const password = form.password.value;
 
-        console.log({
-            name,
-            email,
-            image,
-            password,
-        });
+        // console.log({
+        //     name,
+        //     email,
+        //     image,
+        //     password,
+        // });
     };
 
     const handleGoogleSignIn=()=>{
         googleSignIn()
         .then(result=>{
             setUser(result.user)
-            console.log(result.user)
+            // console.log(result.user)
 
             const newUser = {
                 name: result.user.displayName,
@@ -38,7 +38,7 @@ const Register = () => {
             }
 
             // set user data to database
-            fetch('http://localhost:3000/users', {
+            fetch('https://smart-deals-server-copy.vercel.app/users', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router"
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://smart-deals-server-copy.vercel.app'
 })
 
 const useAxiosSecure = () => {
@@ -24,9 +24,10 @@ const useAxiosSecure = () => {
         const responseInterceptor = instance.interceptors.response.use(res => {
             return res
         }, err => {
-            const status = err.status;
+            const status = err.response?.status;
             if (status === 401 || status === 403){
-                console.log('log out the user for bad request');
+                console.log("Unauthorized:", status);
+                console.log("Response:", err.response?.data);
                 signOutUser()
                 .then(()=>{
                     navigate('/login')

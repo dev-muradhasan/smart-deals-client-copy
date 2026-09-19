@@ -18,7 +18,7 @@ const CreateAProduct = () => {
         const image = e.target.image.value;
         const price_min = e.target.price_min.value;
         const price_max = e.target.price_max.value;
-        console.log(title, image, price_min, price_max);
+        // console.log(title, image, price_min, price_max);
         const newProduct = { title, image, price_min, price_max, email: user.email, seller_image: user.photoURL, seller_name: user.displayName  }
 
         // axios.post('http://localhost:3000/products', newProduct)
@@ -36,7 +36,7 @@ const CreateAProduct = () => {
         //     })
         axiosSecure.post('/products', newProduct)
         .then(data=>{
-            console.log('after secure call',data.data)
+            // console.log('after secure call',data.data)
             if (data.data.insertedId) {
                         Swal.fire({
                             position: "center",
